@@ -4,5 +4,5 @@ from better_requests.server.adapter import BetterRequestEndpointAdapter
 from better_requests.services.save_news_article_html import SaveNewsArticleHtmlDocument
 
 SERVICES = [
-    BetterRequestEndpointAdapter('/', HttpMethod.POST, SaveNewsArticleHtmlDocument())
+    BetterRequestEndpointAdapter('/news-article', HttpMethod.POST, SaveNewsArticleHtmlDocument()),
 ]
