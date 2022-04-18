@@ -1,10 +1,9 @@
 from http_server import BaseHttpServer
 
-from better_requests.server.http_endpoints import HTTP_ENDPOINTS
+from better_requests.server.services import SERVICES
 
 
 class BetterRequestsServer(BaseHttpServer):
     def __init__(self):
         super().__init__(port=8082)
-        self.register_endpoint_adapters(HTTP_ENDPOINTS)
-
+        self.register_services(SERVICES)

@@ -1,10 +1,10 @@
 from typing import Dict
 
-from http_server import BaseHttpEndpointAdapter
+from http_server import BaseHttpEndpointServiceAdapter
 
 from better_requests.services.base import BaseBetterRequestsService
 
 
-class BetterRequestEndpointAdapter(BaseHttpEndpointAdapter[BaseBetterRequestsService]):
+class BetterRequestEndpointAdapter(BaseHttpEndpointServiceAdapter[BaseBetterRequestsService]):
     def run(self, params: Dict):
         self.service.run(params)
