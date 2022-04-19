@@ -1,5 +1,4 @@
-from better_requests import SERVICES
-from better_requests import BetterRequestsServer
+from better_requests import SERVICES, BetterRequestsServer
 
 if __name__ == '__main__':
     server = BetterRequestsServer()

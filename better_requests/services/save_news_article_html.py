@@ -1,8 +1,8 @@
 from typing import Dict
 
 from daos.internal import (
-    NewsArticleHtmlDocumentRepository,
-    NewsArticleHtmlDocumentModel,
+    NewsArticleHtmlDocumentRawRepository,
+    NewsArticleHtmlDocumentRawModel,
     NewsArticleHtmlDocumentIndexRepository,
     NewsArticleHtmlDocumentIndexModel
 )
@@ -11,12 +11,16 @@ from better_requests.services.base import BaseBetterRequestsService
 
 
 class SaveNewsArticleHtmlDocument(BaseBetterRequestsService):
-    def __init__(self):
-        self.document_repository = NewsArticleHtmlDocumentRepository()
-        self.index_repository = NewsArticleHtmlDocumentIndexRepository()
+    def __init__(
+            self,
+            document_repository: NewsArticleHtmlDocumentRawRepository,
+            index_repository: NewsArticleHtmlDocumentIndexRepository
+    ):
+        self.document_repository = document_repository
+        self.index_repository = index_repository
 
     def run(self, params: Dict):
-        document = NewsArticleHtmlDocumentModel()
+        document = NewsArticleHtmlDocumentRawModel()
         document.contents = params.get('markup')
 
         if not document.contents:
