@@ -1,9 +1,9 @@
 from typing import Dict
 
 from daos.internal import (
-    NewsArticleHtmlDocumentDao,
+    NewsArticleHtmlDocumentRepository,
     NewsArticleHtmlDocumentModel,
-    NewsArticleHtmlDocumentIndexDao,
+    NewsArticleHtmlDocumentIndexRepository,
     NewsArticleHtmlDocumentIndexModel
 )
 
@@ -12,8 +12,8 @@ from better_requests.services.base import BaseBetterRequestsService
 
 class SaveNewsArticleHtmlDocument(BaseBetterRequestsService):
     def __init__(self):
-        self.html_dao = NewsArticleHtmlDocumentDao()
-        self.index_dao = NewsArticleHtmlDocumentIndexDao()
+        self.document_repository = NewsArticleHtmlDocumentRepository()
+        self.index_repository = NewsArticleHtmlDocumentIndexRepository()
 
     def run(self, params: Dict):
         document = NewsArticleHtmlDocumentModel()
@@ -22,13 +22,16 @@ class SaveNewsArticleHtmlDocument(BaseBetterRequestsService):
         if not document.contents:
             raise Exception('request body must have markup key.')
 
-        self.html_dao.save(document)
+        self.document_repository.save(document)
 
         index_item = NewsArticleHtmlDocumentIndexModel()
         index_item.document_id = document.get_id()
         index_item.retrieved_from_web_at = params.get('timestamp')
+        index_item.document_format = self.document_repository.file_format.value
+        index_item.source_url = params.get('url')
+        index_item.document_path = str(document.get_path())
 
-        self.index_dao.save(index_item)
+        self.index_repository.save(index_item)
 
         return {
             'status': 'SUCCESS'
