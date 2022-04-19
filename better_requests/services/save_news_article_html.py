@@ -19,6 +19,9 @@ class SaveNewsArticleHtmlDocument(BaseBetterRequestsService):
         document = NewsArticleHtmlDocumentModel()
         document.contents = params.get('markup')
 
+        if not document.contents:
+            raise Exception('request body must have markup key.')
+
         self.html_dao.save(document)
 
         index_item = NewsArticleHtmlDocumentIndexModel()
@@ -26,3 +29,7 @@ class SaveNewsArticleHtmlDocument(BaseBetterRequestsService):
         index_item.retrieved_from_web_at = params.get('timestamp')
 
         self.index_dao.save(index_item)
+
+        return {
+            'status': 'SUCCESS'
+        }

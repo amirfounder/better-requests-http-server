@@ -7,4 +7,4 @@ from better_requests.services.base import BaseBetterRequestsService
 
 class BetterRequestEndpointAdapter(BaseHttpEndpointServiceAdapter[BaseBetterRequestsService]):
     def run(self, params: Dict):
-        self.service.run(params)
+        return self.service.run(params)
