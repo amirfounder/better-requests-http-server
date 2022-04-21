@@ -23,13 +23,9 @@ class SaveHtmlDocument(Base):
         document.flush_contents()
 
         index_item = self.index_repository.create()
-        index_item.document_id = document.id
-        index_item.document_format = document.suffix
-        index_item.raw_version_document_path = str(document.path)
-        index_item.is_raw_version_stored = True
         index_item.url = params.get('url')
+        index_item.document_id = document.id
         index_item.retrieved_from_web_at = params.get('timestamp')
-
         self.index_repository.update(index_item)
 
         return {
